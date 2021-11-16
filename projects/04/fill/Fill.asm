@@ -59,7 +59,7 @@
     0;JMP
 
 (PAINT)
-    // if (screenpos == maxscreenpos) goto START
+    // if (count == maxcount) goto START
     @count
     D=M
     @maxcount
