@@ -48,7 +48,8 @@ CHIP CPU {
     Or(a=notop, b=instruction[5], out=aload);
     ARegister(in=ain, load=aload, out=aout, out[0..14]=addressM, out[15]=false);
 
-    DRegister(in=din, load=instruction[4], out=dout);
+    And(a=instruction[15], b=instruction[4], out=dload);
+    DRegister(in=din, load=dload, out=dout);
 
     ALU(x=dout, y=yin, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=aluout, out=outM, out=din, zr=aluoutzr, ng=aluoutng);
     Or(a=aluoutzr, b=aluoutng, out=aluoutpstemp);
