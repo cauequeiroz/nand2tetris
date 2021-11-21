@@ -7,6 +7,20 @@ export default {
     },
 
     /*
+    * Check if is a label instruction line
+    * -------------------------------------------------------------------------- */
+    isLabelLine(line) {
+        return line.startsWith('(');
+    },
+
+    /*
+    * Check if is an address symbol (label or variable)
+    * -------------------------------------------------------------------------- */
+    isAddressSymbol(instruction) {
+        return isNaN(instruction);
+    },
+
+    /*
     * Remove line/inline comments
     * -------------------------------------------------------------------------- */
     removeComments(line) {
@@ -52,5 +66,12 @@ export default {
         }
 
         return instruction.split(';')[1];
+    },
+
+    /*
+    * Return label name
+    * -------------------------------------------------------------------------- */
+    getLabel(instruction) {
+        return instruction.replace('(', '').replace(')', '');
     }
 }

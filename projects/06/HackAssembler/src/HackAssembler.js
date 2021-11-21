@@ -3,12 +3,47 @@ import fs from 'fs';
 
 import Parser from './Parser.js';
 import Binary from './Binary.js';
+import PreDefinedSymbolTable from './PreDefinedSymbolTable.js';
+
+let SymbolTable = {
+    memory: { ...PreDefinedSymbolTable },
+    nextAvailableAddress: 16
+};
+
+const main = () => {
+    getLabelAddresses();
+    generateHackFile();
+};
+
+/*
+ * Scan .asm file to save all label addresses at SymbolTable.
+ * -------------------------------------------------------------------------- */
+const getLabelAddresses = () => {
+    let FileReader = new readlines(process.argv.slice(2)[0]);
+
+    let line = null;
+    let addressCount = 0;    
+
+    while (line = FileReader.next()) {
+        let instruction = Parser.removeComments(line.toString('ascii'));
+
+        if (Parser.isBlankLine(instruction)) {
+            continue;
+        }
+
+        if (Parser.isLabelLine(instruction)) {
+            SymbolTable.memory[Parser.getLabel(instruction)] = addressCount;
+        } else {
+            addressCount++;
+        }
+    }
+};
 
 /*
  * Read a .asm file and, line by line, converts to a valid 
  * machine language instruction. Save the output into a .hack file.
  * -------------------------------------------------------------------------- */
-const main = () => {
+const generateHackFile = () => {
     let FileReader = new readlines(process.argv.slice(2)[0]);
     let FileWriter = fs.createWriteStream('../out/out.hack', { flags: 'w' });
 
@@ -17,7 +52,7 @@ const main = () => {
     while (line = FileReader.next()) {
         let instruction = Parser.removeComments(line.toString('ascii'));
 
-        if (Parser.isBlankLine(instruction)) {
+        if (Parser.isBlankLine(instruction) || Parser.isLabelLine(instruction)) {
             continue;
         }
 
@@ -36,8 +71,23 @@ const main = () => {
 /*
  * Convert instruction of type A (address instructions)
  * -------------------------------------------------------------------------- */
-const convertInstructionA = instruction => {
-    return "0" + Binary.decimalToBinary(instruction.slice(1));
+const convertInstructionA = (instruction) => {
+    instruction = instruction.slice(1);
+    
+    if (Parser.isAddressSymbol(instruction)) {
+        if (SymbolTable.memory[instruction] != undefined) {
+            instruction = SymbolTable.memory[instruction];
+        } else {
+            let address = SymbolTable.nextAvailableAddress
+            
+            SymbolTable.memory[instruction] = address;
+            SymbolTable.nextAvailableAddress++;
+
+            instruction = address;
+        }
+    }
+    
+    return "0" + Binary.decimalToBinary(instruction);
 };
 
 /*

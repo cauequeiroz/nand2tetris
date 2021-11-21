@@ -9,4 +9,4 @@ The goal is two build a **fully functional 16-bit computer from scratch**.
 - [x] Week 3
 - [x] Week 4
 - [x] Week 5
-- [ ] Week 6
+- [x] Week 6
