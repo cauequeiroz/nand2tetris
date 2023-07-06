@@ -1,3 +1,4 @@
 *.out
+*.tst
 tools/*
 **/node_modules
