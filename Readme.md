@@ -1,7 +1,7 @@
 # From NAND to Tetris
 
 This repository contains all the projects for the [nand2tetris](https://www.coursera.org/learn/build-a-computer) course.  
-The goal is two build a **fully functional 16-bit computer from scratch**.
+The goal is to build a **fully functional 16-bit computer from scratch**.
 
 **Part I:**  
 - [x] Week 1
