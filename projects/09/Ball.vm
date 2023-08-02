@@ -1,0 +1,117 @@
+function Ball.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push constant 10
+pop this 2
+push constant 10
+pop this 3
+push constant 0
+pop this 4
+push pointer 0
+call Ball.draw 1
+pop temp 0
+push pointer 0
+return
+function Ball.draw 0
+push argument 0
+pop pointer 0
+push this 0
+push this 1
+push constant 50
+call Screen.drawCircle 3
+pop temp 0
+push constant 0
+return
+function Ball.move 0
+push argument 0
+pop pointer 0
+push constant 0
+pop this 4
+push this 1
+push constant 50
+sub
+push constant 10
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 3
+neg
+pop this 3
+push constant 0
+not
+pop this 4
+label IF_FALSE0
+push this 1
+push constant 50
+add
+push constant 240
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 3
+neg
+pop this 3
+push constant 0
+not
+pop this 4
+label IF_FALSE1
+push this 0
+push constant 50
+sub
+push constant 10
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 2
+neg
+pop this 2
+push constant 0
+not
+pop this 4
+label IF_FALSE2
+push this 0
+push constant 50
+add
+push constant 500
+gt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 2
+neg
+pop this 2
+push constant 0
+not
+pop this 4
+label IF_FALSE3
+push this 0
+push this 2
+add
+pop this 0
+push this 1
+push this 3
+add
+pop this 1
+push constant 0
+return
+function Ball.getWallHit 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function Ball.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

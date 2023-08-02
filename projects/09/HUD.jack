@@ -1,0 +1,35 @@
+class HUD {
+    field int counter;
+
+    constructor HUD new(int counter) {
+        let counter = counter;
+        do drawCounter();
+        return this;
+    } 
+
+    method void drawCounter() {
+        do Output.moveCursor(0, 0);
+        do Output.printString("Hit counter: ");
+        do Output.printInt(counter);
+        return;
+    }
+
+    method void updateCounter(boolean shouldUpdate) {
+        if (shouldUpdate) {
+            let counter = counter + 1;
+        }
+
+        return;
+    }
+
+    method void drawPauseScreen() {
+        do Output.moveCursor(11, 28);
+        do Output.printString("Paused!");
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

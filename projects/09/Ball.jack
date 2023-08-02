@@ -1,0 +1,64 @@
+class Ball {
+    field int posx;
+    field int posy;
+    field int speedX;
+    field int speedY;
+    field boolean wallHit;
+
+    constructor Ball new(int x, int y) {
+        let posx = x;
+        let posy = y;
+        let speedX = 10;
+        let speedY = 10;
+        let wallHit = false;
+
+        do draw();
+
+        return this;
+    }
+
+    method void draw() {
+        do Screen.drawCircle(posx, posy, 50);
+
+        return;
+    }
+
+    method void move() {
+        let wallHit = false;
+
+        // Check if ball hits top
+        if ((posy - 50) < 10) {
+            let speedY = -speedY;
+            let wallHit = true;
+        }
+        // Check if ball hits bottom
+        if ((posy + 50) > 240) {
+            let speedY = -speedY;
+            let wallHit = true;
+        }
+        // Check if ball hits left
+        if ((posx - 50) < 10) {
+            let speedX = -speedX;
+            let wallHit = true;
+        }
+        // Check if ball hits right
+        if ((posx + 50) > 500) {
+            let speedX = -speedX;
+            let wallHit = true;
+        }
+
+        let posx = posx + speedX;
+        let posy = posy + speedY;
+
+        return;
+    }
+
+    method boolean getWallHit() {
+        return wallHit;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

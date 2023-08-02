@@ -1,0 +1,50 @@
+class Game {
+    field Ball ball;
+    field HUD hud;
+    field char keyPressed;
+    field boolean isGamePaused;
+
+    constructor Game new() {
+        let ball = Ball.new(100, 100);
+        let hud = HUD.new(0);
+        let isGamePaused = false;
+        return this;
+    }
+
+    method void run() {
+        while(true) {
+            let keyPressed = Keyboard.keyPressed();
+            
+            while (~(keyPressed = 32)) {
+                let isGamePaused = false;
+
+                do Screen.clearScreen();
+                
+                do ball.move();
+                do ball.draw();
+                
+                do hud.updateCounter(ball.getWallHit());
+                do hud.drawCounter();
+                
+                do Sys.wait(100);
+                let keyPressed = Keyboard.keyPressed();
+            }
+
+            if (~isGamePaused) {
+                let isGamePaused = true;
+
+                do Screen.clearScreen();
+                do hud.drawPauseScreen();
+            }
+        }
+
+        return;
+    }
+
+    method void dispose() {
+        do ball.dispose();
+        do hud.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}
