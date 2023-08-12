@@ -15,6 +15,6 @@ The goal is to build a **fully functional 16-bit computer from scratch**.
 - [x] Week 1
 - [x] Week 2
 - [x] Week 3
-- [ ] Week 4
+- [x] Week 4
 - [ ] Week 5
 - [ ] Week 6
